@@ -2,17 +2,15 @@ package com.barbearia.backend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Entity
-@table(name = "agendamento")
-public class agendamento {
-    @id
+@Table(name = "agendamentos")
+public class Agendamento {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Log id;
+    private Long id;
 
     //cliente
     @ManyToOne
@@ -27,5 +25,5 @@ public class agendamento {
     private Servico servico;
 
     //Data e hora
-    private LocalDataTime dataHora;
+    private LocalDateTime dataHora;
 }

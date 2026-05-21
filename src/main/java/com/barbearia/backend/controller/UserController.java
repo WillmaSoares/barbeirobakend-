@@ -1,5 +1,5 @@
 package com.barbearia.backend.controller;
-
+import com.barbearia.backend.enums.Role;
 import com.barbearia.backend.entity.User;
 import com.barbearia.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +22,11 @@ public class UserController {
     @GetMapping
     public List<User> listarUsuarios() {
         return userRepository.findAll();
+    }
+
+    @GetMapping("/barbeiros")
+    public List<User> listarBarbeiro(){
+        return userRepository.findByRole(Role.BARBEIRO);
+
     }
 }
