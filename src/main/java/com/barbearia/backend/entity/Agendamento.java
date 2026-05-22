@@ -1,29 +1,34 @@
 package com.barbearia.backend.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+
+@Entity
 @Getter
 @Setter
-@Entity
 @Table(name = "agendamentos")
 public class Agendamento {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //cliente
     @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    @JsonIgnoreProperties({"senha", "email", "telefone"})
     private User cliente;
 
-    //barbeiro
     @ManyToOne
+    @JoinColumn(name = "barbeiro_id")
+    @JsonIgnoreProperties({"senha", "email", "telefone"})
     private User barbeiro;
 
-    //serviço
     @ManyToOne
+    @JoinColumn(name = "servico_id")
     private Servico servico;
 
-    //Data e hora
     private LocalDateTime dataHora;
 }

@@ -16,11 +16,12 @@ public class AgendamentoController {
 
     @PostMapping
     public Agendamento criar(@RequestBody Agendamento agendamento) {
-        return repository.save(agendamento);
+        Agendamento salvo = repository.save(agendamento);
+        return repository.findByIdComDados(salvo.getId()).orElse(salvo);
     }
 
     @GetMapping
     public List<Agendamento> listar() {
-        return repository.findAll();
+        return repository.findAllComDados();
     }
 }
