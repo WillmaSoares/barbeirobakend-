@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
-
+import com.barbearia.backend.enums.StatusAgendamento;
 @Entity
 @Getter
 @Setter
@@ -31,4 +31,7 @@ public class Agendamento {
     private Servico servico;
 
     private LocalDateTime dataHora;
+
+    @Enumerated(EnumType.STRING)
+    private StatusAgendamento status = StatusAgendamento.AGENDADO;
 }
