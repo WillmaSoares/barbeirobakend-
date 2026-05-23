@@ -6,9 +6,9 @@ import com.barbearia.backend.repository.AgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Map;
 @RestController
 @RequestMapping("/agendamentos")
 public class AgendamentoController {
@@ -66,5 +66,32 @@ public class AgendamentoController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    // RF08 — Agenda diária do barbeiro
+    @GetMapping("/barbeiro/{barbeiroId}/data/{data}")
+    public List<Agendamento> agendaPorData(
+            @PathVariable Long barbeiroId,
+            @PathVariable String data) {
+        LocalDate dia = LocalDate.parse(data);
+        return repository.findAllComDados().stream()
+                .filter(a -> a.getBarbeiro() != null
+                        && a.getBarbeiro().getId().equals(barbeiroId)
+                        && a.getDataHora() != null
+                        && a.getDataHora().toLocalDate().equals(dia))
+                .toList();
+    }
+
+    // RF12 — Relatório de faturamento
+    @GetMapping("/faturamento")
+    public Map<String, Object> faturamento() {
+        List<Agendamento> concluidos = repository.findByStatus(StatusAgendamento.CONCLUIDO);
+        double total = concluidos.stream()
+                .filter(a -> a.getServico() != null)
+                .mapToDouble(a -> a.getServico().getPreco())
+                .sum();
+        return Map.of(
+                "totalAtendimentos", concluidos.size(),
+                "faturamentoTotal", total
+        );
+    }
 
 }
