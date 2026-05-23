@@ -56,4 +56,15 @@ public class AgendamentoController {
     public List<Agendamento> historico() {
         return repository.findByStatus(StatusAgendamento.CONCLUIDO);
     }
+
+    // RF09 — Confirmar realização de serviço
+    @PatchMapping("/{id}/concluir")
+    public ResponseEntity<Agendamento> concluir(@PathVariable Long id) {
+        return repository.findById(id).map(ag -> {
+            ag.setStatus(StatusAgendamento.CONCLUIDO);
+            return ResponseEntity.ok(repository.save(ag));
+        }).orElse(ResponseEntity.notFound().build());
+    }
+
+
 }
