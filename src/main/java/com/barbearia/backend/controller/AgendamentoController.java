@@ -1,7 +1,6 @@
 package com.barbearia.backend.controller;
-
-import com.barbearia.backend.entity.Agendamento;
 import com.barbearia.backend.enums.StatusAgendamento;
+import com.barbearia.backend.entity.Agendamento;
 import com.barbearia.backend.repository.AgendamentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
